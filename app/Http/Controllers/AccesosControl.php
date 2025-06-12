@@ -241,12 +241,22 @@ class AccesosControl extends BaseSoapController
                     ->join('Organizaciones', 'Organizaciones.idOrganizacion', '=', 'Accesos.idOrganizacion')
                     ->join('Users', 'Users.id', '=', 'Organizaciones.idUSuario')
                     ->join('Pisos', 'Pisos.idPiso', '=', 'Organizaciones.idPiso')
-                     ->join('Impresoras', 'Impresoras.idImpresora', '=', 'Users.idImpresora')
                     ->join('Edificios', 'Edificios.idEdificio', '=', 'Pisos.idEdificio')
                     ->Where('Accesos.idAcceso', '=', $Visitas->idAcceso)
-                    ->select(['Users.name','Impresoras.Nombre', 'Users.email', 'Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Accesos.Creacion', 'Accesos.CodigoTarjeta', 'Accesos.Estado'])
+                    ->select(['Users.name', 'Users.email', 'Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Accesos.Creacion', 'Accesos.CodigoTarjeta', 'Accesos.Estado'])
                     ->first();
-                 
+
+                   $user = \Auth::user()->load('impresora'); 
+
+
+                if ($user->impresora) {
+                    $datos->Nombre = $user->impresora->Nombre;
+                } else {
+                            $datos->Nombre = null; // o un valor por defecto
+                    }
+
+
+                 Log::info("Datos Acceso:". json_encode($datos));
                $user = \Auth::user();
                 $idUsuario = $user->id;
 

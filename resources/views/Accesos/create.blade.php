@@ -187,7 +187,9 @@
     </div>
 </div>
 <!-- En tu layout o vista -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('public/js/sweetalert2.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('public/css/sweetalert2.min.css') }}">
+
 
 
 <script type="text/javascript">
@@ -366,7 +368,8 @@
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Sí, imprimir',
-    cancelButtonText: 'No, gracias'
+    cancelButtonText: 'No, gracias',
+    allowEnterKey: true
 }).then((result) => {
     if (result.isConfirmed) {
              Guaradar($("#nombres_add").val(), $("#cedula_lector_add").val(), $("#organizacion_add").val(), $("#sexo_add").val(), $("#codigo_tarjeta_add").val(), registro,true);

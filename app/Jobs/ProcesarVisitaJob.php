@@ -66,27 +66,29 @@ class ProcesarVisitaJob implements ShouldQueue
             }
         }
 
-        // Enviar correo si tiene email
-        if (!empty($this->datos->email)) {
-            Mail::to($this->datos->email)->send(new EnviarEmail($this->datos));
-        }
+       try {
+    Mail::to($this->datos->email)->send(new EnviarEmail($this->datos));
+    Log::info("Correo enviado correctamente a {$this->datos->email}");
+} catch (\Exception $e) {
+    Log::error("Error al enviar correo a {$this->datos->email}: " . $e->getMessage());
+}
 
         // Enviar mensaje a Telegram
         $telegram = new TelegramServices();
         $fecha = now()->format('Y-m-d H:i:s');
+		$organizacion = $this->datos->nombre_organizacion ?: 'Centro financiero';
 
-        $message = <<<TEXT
+$message = <<<TEXT
 La persona {$this->personas->Nombres}
 Cédula: {$this->personas->Cedula}
 Sexo: {$this->personas->Sexo}
-Ha visitado la organización: {$this->datos->nombre_organizacion}
+Ha visitado la organización: {$organizacion}
 Código Tarjeta: {$this->visitas->CodigoTarjeta}
-Ubicada en el edificio: {$this->datos->nombre_edificio}
+Ubicada en el edificio: {$organizacion}
 Piso: {$this->datos->nombre_piso}
 Ticket número: {$this->datos->idAcceso}
 Fecha y Hora: {$fecha}
 TEXT;
-
         $telegram->sendMessage($message);
 
         // Registrar en auditoría
