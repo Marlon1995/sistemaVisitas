@@ -233,6 +233,7 @@ class AccesosControl extends BaseSoapController
                 $Visitas->idPersona = $Personas->idPersona;
                 $Visitas->idOrganizacion = $request->txt_organizacion;
                 $Visitas->CodigoTarjeta = $request->txt_codigo_tarjeta;
+                $Visitas->PersonaPermitioAcceso = $request->txt_persona_permitio_acceso;
                 $Visitas->idVisita = $id;
                 $Visitas->idUsuario = \Auth::user()->id;
                 $Visitas->save();
@@ -243,7 +244,7 @@ class AccesosControl extends BaseSoapController
                     ->join('Pisos', 'Pisos.idPiso', '=', 'Organizaciones.idPiso')
                     ->join('Edificios', 'Edificios.idEdificio', '=', 'Pisos.idEdificio')
                     ->Where('Accesos.idAcceso', '=', $Visitas->idAcceso)
-                    ->select(['Users.name', 'Users.email', 'Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Accesos.Creacion', 'Accesos.CodigoTarjeta', 'Accesos.Estado'])
+                    ->select(['Users.name', 'Users.email', 'Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Accesos.Creacion', 'Accesos.CodigoTarjeta', 'Accesos.Estado', 'Accesos.PersonaPermitioAcceso'])
                     ->first();
 
                    $user = \Auth::user()->load('impresora'); 
@@ -353,7 +354,7 @@ class AccesosControl extends BaseSoapController
             if (PermisosModelo::where('idUsuario', '=', \Auth::user()->id)->where('idRol', '=', 1)->count() == 0) {
                 $datos = $datos->where('Organizaciones.idUsuario', '=', \Auth::user()->id);
             }
-            $datos = $datos->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Sexo', 'Personas.Foto', '.Accesos.CodigoTarjeta', 'Personas.Cedula', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita'])
+            $datos = $datos->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Sexo', 'Personas.Foto', '.Accesos.CodigoTarjeta', 'Personas.Cedula', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita', 'Accesos.PersonaPermitioAcceso'])
                 ->Where(function ($query) use ($query1) {
                     $query
                         ->orwhere('Personas.Nombres', 'LIKE', '%' . $query1 . '%')
@@ -388,7 +389,7 @@ class AccesosControl extends BaseSoapController
                 //dd($visitas);
             }
             $datos = $datos->Where('Visitas.idVisita', '=', $Visitas->idVisita)
-                ->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Accesos.CodigoTarjeta', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita', 'Personas.Sexo'])
+                ->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Accesos.CodigoTarjeta', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita', 'Personas.Sexo', 'Accesos.PersonaPermitioAcceso'])
                 ->orderBy('Accesos.idAcceso', 'DESC')
                 ->Where(function ($query) use ($query1) {
                     $query
@@ -437,7 +438,7 @@ class AccesosControl extends BaseSoapController
                     ->Where('DuenoEdificio.idUSuario', '=', \Auth::user()->id);
                 $tipo = 1;
             }
-            $datos = $datos->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Foto', 'Personas.Cedula', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita', 'Personas.Sexo', 'Accesos.CodigoTarjeta'])
+            $datos = $datos->select(['Accesos.idAcceso', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Foto', 'Personas.Cedula', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita', 'Personas.Sexo', 'Accesos.CodigoTarjeta', 'Accesos.PersonaPermitioAcceso'])
                 ->orderBy('Accesos.idAcceso', 'DESC')
                 ->Where(function ($query) use ($query1) {
                     $query

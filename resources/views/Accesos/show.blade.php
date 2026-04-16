@@ -22,6 +22,7 @@
                             <th>Nombres</th>
                             <th>Cedula</th>
                             <th>Foto</th>
+                            <th>Autorizó Acceso</th>
                             <th>Fecha</th>
                             <th>Estado</th>
                             @if($tipo==0)
@@ -46,6 +47,7 @@
                                 <td><img src="{{asset('public/avatar_mujer.png')}}" width="80px" height="80px"></td>
                                 @endif
                                 
+                                <td>{{$post->PersonaPermitioAcceso ?? '-'}}</td>
                                 <td>{{$post->Creacion}}</td>
                                 <td>
                                     @if($post->Estado==0)

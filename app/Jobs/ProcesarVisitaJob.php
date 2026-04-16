@@ -124,7 +124,8 @@ private function imprimir($url, $datos)
             "nombre_edificio" => $datos->nombre_edificio ?? '',
             "CodigoTarjeta" => $datos->CodigoTarjeta ?? '',
             "nombre_piso" => $datos->nombre_piso ?? '',
-            "nombre_organizacion" => $datos->nombre_organizacion ?? ''
+            "nombre_organizacion" => $datos->nombre_organizacion ?? '',
+            "PersonaPermitioAcceso" => $datos->PersonaPermitioAcceso ?? ''
         ]);
 
         $ch = curl_init();

@@ -208,6 +208,7 @@
             <th>Nombres</th>
             <th>Cedula</th>
             <th>Foto</th>
+            <th>Autorizó Acceso</th>
             <th>Fecha</th>
         </tr>
         </thead>
@@ -227,6 +228,7 @@
                 @else
                     <td><img src="{{asset('public/avatar_mujer.png')}}" width="30px" height="30px"></td>
                 @endif
+                <td>{{$dat->PersonaPermitioAcceso ?? '-'}}</td>
                 <td>{{$dat->Creacion}}</td>
             </tr>
             ?>
@@ -264,6 +266,7 @@
             <th>Piso</th>
             <th>Organización</th>
             <th>Código Tarjeta</th>
+            <th>Autorizó Acceso</th>
             <th>Fecha</th>
         </tr>
         </thead>
@@ -276,6 +279,7 @@
                 <td>{{$dat->nombre_piso}}</td>
                 <td>{{$dat->nombre_organizacion}}</td>
                 <td>{{$dat->CodigoTarjeta}}</td>
+                <td>{{$dat->PersonaPermitioAcceso ?? '-'}}</td>
                 <td>{{$dat->Creacion}}</td>
             </tr>
             ?>

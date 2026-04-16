@@ -49,7 +49,7 @@ class PDFControl extends Controller
             ->join('Visitas', 'Visitas.idVisita', '=', 'Accesos.idVisita')
             ->join('Personas', 'Personas.idPersona', '=', 'Accesos.idPersona')
             ->join('Users', 'Users.id', '=', 'Accesos.idUsuario')
-            ->select(['Users.name as NombreAtendido', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Personas.Foto', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita','Accesos.idAcceso', 'Accesos.CodigoTarjeta']);
+            ->select(['Users.name as NombreAtendido', 'Edificios.Nombre as nombre_edificio', 'Organizaciones.Nombre as nombre_organizacion', 'Pisos.Nombre as nombre_piso', 'Personas.Nombres', 'Personas.Cedula', 'Personas.Sexo', 'Personas.Foto', 'Accesos.Creacion', 'Accesos.Estado', 'Visitas.idVisita','Accesos.idAcceso', 'Accesos.CodigoTarjeta', 'Accesos.PersonaPermitioAcceso']);
 
         if ($request->has('persona')) {
             $datos = $datos->where('Personas.idPersona', '=', $request->persona);

@@ -8,7 +8,7 @@ class AccesosModelo extends Model
 {
     protected $table = 'Accesos';
     protected $primaryKey = 'idAcceso';
-    protected $fillable = ['idPersona','idUusario', 'idOrganizacion' ,'CodigoTarjeta', 'idVisita', 'Creacion', 'Modificacion'];
+    protected $fillable = ['idPersona','idUusario', 'idOrganizacion' ,'CodigoTarjeta', 'PersonaPermitioAcceso', 'idVisita', 'Creacion', 'Modificacion'];
     public $timestamps = false;
 
     public static function getExcerpt($str, $startPos = 0, $maxLength = 50)

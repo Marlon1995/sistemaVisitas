@@ -96,6 +96,16 @@
                     </div>
                 </div>
 
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="persona_permitio_acceso"><span class="glyphicon glyphicon-user"></span> Persona que autorizó acceso</label>
+                        <input type="text" name="persona_permitio_acceso_add" id="persona_permitio_acceso_add"
+                               class="form-control"
+                               placeholder="Nombre de quien autoriza el acceso..">
+                        <p class="errorPersonaPermitioAcceso text-center alert alert-danger hidden"></p>
+                    </div>
+                </div>
+
                         <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 lector">
                     <div class="form-group">
                         <label for="Cedula">Cedula</label>
@@ -275,7 +285,7 @@
 
     let registro = 1;
 
-   function Guaradar(nombre_add, cedula_add, organizacion_add, sexo_add, codigo_tarjeta_add, tipo,deseaImprimir) {
+   function Guaradar(nombre_add, cedula_add, organizacion_add, sexo_add, codigo_tarjeta_add, tipo, deseaImprimir, persona_permitio_acceso_add) {
 
 
     
@@ -291,7 +301,8 @@
             'txt_sexo_persona': sexo_add,
             'txt_codigo_tarjeta': codigo_tarjeta_add,
             'tipo': tipo,
-            'imprimir_ticket': deseaImprimir 
+            'imprimir_ticket': deseaImprimir,
+            'txt_persona_permitio_acceso': persona_permitio_acceso_add
         },
         success: function (data) {
             // Ocultar errores previos
@@ -331,6 +342,7 @@
                 $('#nombre_add').val('');
                 $('#cedula_lector_add').val('');
                 $('#codigo_tarjeta_add').val('');
+                $('#persona_permitio_acceso_add').val('');
                 quitar();
 
 
@@ -372,10 +384,10 @@
     allowEnterKey: true
 }).then((result) => {
     if (result.isConfirmed) {
-             Guaradar($("#nombres_add").val(), $("#cedula_lector_add").val(), $("#organizacion_add").val(), $("#sexo_add").val(), $("#codigo_tarjeta_add").val(), registro,true);
+             Guaradar($("#nombres_add").val(), $("#cedula_lector_add").val(), $("#organizacion_add").val(), $("#sexo_add").val(), $("#codigo_tarjeta_add").val(), registro, true, $("#persona_permitio_acceso_add").val());
 
     } else {
-        Guaradar($("#nombres_add").val(), $("#cedula_lector_add").val(), $("#organizacion_add").val(), $("#sexo_add").val(), $("#codigo_tarjeta_add").val(), registro,false);
+        Guaradar($("#nombres_add").val(), $("#cedula_lector_add").val(), $("#organizacion_add").val(), $("#sexo_add").val(), $("#codigo_tarjeta_add").val(), registro, false, $("#persona_permitio_acceso_add").val());
     }
 });
     });
